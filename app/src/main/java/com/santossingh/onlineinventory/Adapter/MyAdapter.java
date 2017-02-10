@@ -1,5 +1,6 @@
 package com.santossingh.onlineinventory.Adapter;
 
+import android.support.annotation.Keep;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,20 +17,9 @@ import java.util.List;
  * Created by santoshsingh on 09/02/17.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements View.OnClickListener{
 
     private List<Inventory> inventoryList;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView product,qty,price;
-
-        public MyViewHolder(View view) {
-            super(view);
-            product = (TextView) view.findViewById(R.id.R_product);
-            qty= (TextView) view.findViewById(R.id.R_qty);
-            price = (TextView) view.findViewById(R.id.R_price);
-        }
-    }
 
     public MyAdapter(List<Inventory> inventoryList){
         this.inventoryList=inventoryList;
@@ -59,6 +49,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.inventoryList=inventoryList;
     }
 
+    @Keep
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView product,qty,price;
 
+        public MyViewHolder(View view) {
+            super(view);
+            product = (TextView) view.findViewById(R.id.R_product);
+            qty= (TextView) view.findViewById(R.id.R_qty);
+            price = (TextView) view.findViewById(R.id.R_price);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 
 }

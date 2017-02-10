@@ -12,8 +12,12 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!--<data-->
+                    <!--android:host="onlineinventory-617c9.firebaseio.com"-->
+                    <!--android:scheme="http"-->
+                    <!--android:pathPrefix="/inventory"-->
+                    <!--/>-->
             </intent-filter>
         </activity>
         <activity android:name=".AdminActivity" />
@@ -22,6 +26,8 @@
         <activity android:name=".ShowActivity" />
         <activity android:name=".UpdateActivity" />
         <activity android:name=".UserActivity"></activity>
+
+
     </application>
 
 </manifest>
