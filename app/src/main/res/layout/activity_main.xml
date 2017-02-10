@@ -43,8 +43,6 @@
 
     </LinearLayout>
 
-
-
     <Button
         style="@style/Base.TextAppearance.AppCompat.Widget.Button.Inverse"
         android:layout_width="match_parent"

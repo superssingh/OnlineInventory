@@ -1,13 +1,15 @@
 package com.santossingh.onlineinventory;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference, sellersReference;
-    private ChildEventListener childEventListener;
-
+    AlertDialog.Builder alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseDatabase=FirebaseDatabase.getInstance();
         sellersReference=firebaseDatabase.getReference().child("sellers");
-        databaseReference=firebaseDatabase.getReference().child("inventory");
+
+        alert = new AlertDialog.Builder(this);
+
 
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,5 +53,38 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        alertbox();
+
     }
+
+
+    private void alertbox(){
+        final EditText edittext = new EditText(getApplicationContext());
+        final EditText edittext1 = new EditText(getApplicationContext());
+        alert.setMessage("Book Product");
+        alert.setTitle("Order");
+
+        alert.setView(edittext);
+        alert.setView(edittext1);
+
+        alert.setPositiveButton("Book Now", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //What ever you want to do with the value
+                Editable YouEditTextValue = edittext.getText();
+                //OR
+//                String YouEditTextValue = edittext.getText().toString();
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
+
+    }
+
 }

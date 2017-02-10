@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OnlineInventory</string>
+    <string name="price">Enter Price Of One</string>
+    <string name="qty">Enter Quantity</string>
+    <string name="item_name">Enter Product Name</string>
+    <string name="Category">Select Category</string>
 </resources>
