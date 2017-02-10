@@ -1,6 +1,7 @@
 package com.santossingh.onlineinventory;
 
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,11 +38,11 @@ public class ShowActivity extends AppCompatActivity {
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference().child("inventory");
 
-        linearLayoutManager=new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-
         firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Inventory, RootViewHolder>(
-                Inventory.class,R.layout.list_item,RootViewHolder.class,databaseReference
+                Inventory.class,
+                R.layout.list_item,
+                RootViewHolder.class,
+                databaseReference
                 ) {
             @Override
             protected void populateViewHolder(RootViewHolder viewHolder, Inventory model, int position) {
@@ -51,12 +52,14 @@ public class ShowActivity extends AppCompatActivity {
             }
         };
 
+        linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
-
-    public static class RootViewHolder extends RecyclerView.ViewHolder {
+    @Keep
+    public static class RootViewHolder extends RecyclerView.ViewHolder  {
         TextView product,qty,price;
         public RootViewHolder(View itemView) {
             super(itemView);
