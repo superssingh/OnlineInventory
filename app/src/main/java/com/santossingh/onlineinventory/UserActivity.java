@@ -5,81 +5,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.santossingh.onlineinventory.Adapter.MyAdapter;
-import com.santossingh.onlineinventory.Models.Inventory;
+import com.santossingh.onlineinventory.Adapter.FirebaseRecyclerAdatper.UserRecycleAdapter;
+import com.santossingh.onlineinventory.Models.Sellers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class UserActivity extends AppCompatActivity {
-
-    private List<Inventory> inventoryList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private MyAdapter mAdapter;
+public class UserActivity extends AppCompatActivity implements UserRecycleAdapter.GetDataFromAdapter {
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference, sellersReference;
-    private ChildEventListener childEventListener;
+    DatabaseReference sellersReference;
+    Sellers sellers;
+    UserRecycleAdapter userRecycleAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
         firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference=firebaseDatabase.getReference().child("inventory");
+        sellersReference = FirebaseDatabase.getInstance().getReference().child("sellers");
+        sellers = new Sellers();
+        userRecycleAdapter = new UserRecycleAdapter(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.user_recycleview);
-        mAdapter = new MyAdapter(inventoryList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                for (DataSnapshot data:dataSnapshot.getChildren()){
-                    Inventory inventory=data.getValue(Inventory.class);
-                    Log.i("Data",inventory.getItem());
-                    Log.i("Data",inventory.getPrice());
-                    inventoryList.add(inventory);
-                    Log.i("List",inventoryList.toString());
-
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(userRecycleAdapter);
     }
 
+    @Override
+    public void onCurrentUser(Sellers seller) {
+        sellers = seller;
+        removeData(seller);
+    }
 
+    private void removeData(Sellers sellers) {
+        Toast.makeText(this, sellers.getMobile(), Toast.LENGTH_LONG).show();
+        sellersReference.child(sellers.getKey()).removeValue();
+        this.finish();
+
+    }
 
 }

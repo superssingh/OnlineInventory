@@ -9,6 +9,7 @@ public class Inventory {
     private String quantity;
     private String price;
     private String photoUrl;
+    private String key;
 
     public Inventory() {
     }
@@ -18,6 +19,14 @@ public class Inventory {
         this.quantity = quantity;
         this.price = price;
         this.photoUrl = photoUrl;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getItem() {
@@ -50,5 +59,12 @@ public class Inventory {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public void setValues(Inventory values) {
+        item = values.getItem();
+        quantity = values.getQuantity();
+        price = values.getPrice();
+
     }
 }

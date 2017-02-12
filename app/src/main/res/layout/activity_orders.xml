@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_user"
+    android:id="@+id/activity_orders"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1edef4"
-    android:padding="10dp"
-    tools:context="com.santossingh.onlineinventory.UserActivity">
+    android:background="#bcc0c1"
+    tools:context="com.santossingh.onlineinventory.OrdersActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/user_recycleview"
+        android:id="@+id/orders_recycleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
-
 </RelativeLayout>

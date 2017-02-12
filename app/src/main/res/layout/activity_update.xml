@@ -22,19 +22,11 @@
             android:orientation="vertical">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextBox"
-                android:hint="@string/item_name"
                 android:id="@+id/productName"
-                />
-
-            <EditText
+                style="@style/TextBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextBox"
-                android:hint="@string/Category"
-                android:id="@+id/productCategory"
+                android:hint="@string/item_name"
                 />
 
             <LinearLayout
@@ -43,33 +35,33 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/quantity"
+                    style="@style/TextBox"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    style="@style/TextBox"
                     android:hint="@string/qty"
-                    android:id="@+id/quantity"
                     />
 
                 <EditText
+                    android:id="@+id/price"
+                    style="@style/TextBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TextBox"
                     android:hint="@string/price"
-                    android:id="@+id/price"
                     />
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Update Product"
-                android:id="@+id/update"
+                android:layout_marginTop="30dp"
                 android:background="#d2d7d7"
-                android:padding="20dp"/>
+                android:padding="20dp"
+                android:text="Update Product" />
 
         </LinearLayout>
     </ScrollView>

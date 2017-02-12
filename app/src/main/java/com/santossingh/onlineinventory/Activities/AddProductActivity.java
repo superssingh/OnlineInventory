@@ -1,4 +1,4 @@
-package com.santossingh.onlineinventory;
+package com.santossingh.onlineinventory.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +11,15 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.santossingh.onlineinventory.Models.Inventory;
+import com.santossingh.onlineinventory.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecordActivity extends AppCompatActivity {
+public class AddProductActivity extends AppCompatActivity {
 
     @BindView(R.id.add) Button add;
     @BindView(R.id.productName) EditText product;
-    @BindView(R.id.productCategory) EditText category;
     @BindView(R.id.quantity) EditText quantity;
     @BindView(R.id.price) EditText price;
 

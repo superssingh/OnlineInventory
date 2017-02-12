@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.santossingh.onlineinventory">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:supportsRtl">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-                <!--<data-->
-                    <!--android:host="onlineinventory-617c9.firebaseio.com"-->
-                    <!--android:scheme="http"-->
-                    <!--android:pathPrefix="/inventory"-->
-                    <!--/>-->
+                <!-- <data -->
+                <!-- android:host="onlineinventory-617c9.firebaseio.com" -->
+                <!-- android:scheme="http" -->
+                <!-- android:pathPrefix="/inventory" -->
+                <!-- /> -->
             </intent-filter>
         </activity>
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".Activities.AdminActivity" />
         <activity android:name=".SellerActivity" />
-        <activity android:name=".RecordActivity" />
+        <activity android:name=".Activities.AddProductActivity" />
         <activity android:name=".ShowActivity" />
         <activity android:name=".UpdateActivity" />
-        <activity android:name=".UserActivity"></activity>
-
-
+        <activity android:name=".UserActivity" />
+        <activity android:name=".Activities.AddUserActivity" />
+        <activity android:name=".ProductsActivity" />
+        <activity android:name=".OrdersActivity"></activity>
     </application>
 
 </manifest>

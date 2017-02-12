@@ -28,10 +28,10 @@
 
     <style name="ButtonGreen">
         <item name="android:textColor">#f8f8fa</item>
-        <item name="android:background">#449e5e</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:background">#1a8ac6</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">15dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
 </resources>

@@ -8,6 +8,7 @@ public class Sellers {
     private String username;
     private String password;
     private String mobile;
+    private String key;
 
     public Sellers() {
     }
@@ -41,4 +42,13 @@ public class Sellers {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
 }

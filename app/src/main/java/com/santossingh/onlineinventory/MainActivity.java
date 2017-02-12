@@ -1,30 +1,44 @@
 package com.santossingh.onlineinventory;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.santossingh.onlineinventory.Activities.AdminActivity;
+import com.santossingh.onlineinventory.Models.Admins;
+import com.santossingh.onlineinventory.Models.Sellers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.username) EditText username;
-    @BindView(R.id.password) EditText password;
-    @BindView(R.id.Admin) Button admin;
-    @BindView(R.id.Seller) Button seller;
+import static com.santossingh.onlineinventory.R.id.Admin;
+import static com.santossingh.onlineinventory.R.id.username;
 
+public class MainActivity extends AppCompatActivity {
+    @BindView(username)
+    EditText Musername;
+    @BindView(R.id.password)
+    EditText Mpassword;
+    @BindView(Admin)
+    Button admin;
+    @BindView(R.id.Seller) Button seller;
+    List<Sellers> sellerses;
+    Admins admins;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference, sellersReference;
-    AlertDialog.Builder alert;
+    private DatabaseReference adminRef, sellerRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,59 +46,107 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firebaseDatabase=FirebaseDatabase.getInstance();
-        sellersReference=firebaseDatabase.getReference().child("sellers");
+        sellerRef = firebaseDatabase.getReference().child("sellers");
+        adminRef = firebaseDatabase.getReference().child("admin");
+        sellerses = new ArrayList<>();
+        admins = new Admins();
+        sellerRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Sellers sellers = dataSnapshot.getValue(Sellers.class);
+                sellers.setKey(dataSnapshot.getKey());
+                sellerses.add(sellers);
+            }
 
-        alert = new AlertDialog.Builder(this);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
 
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
 
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        adminRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Admins admin = dataSnapshot.getValue(Admins.class);
+                admin.setKey(dataSnapshot.getKey());
+                admins = admin;
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,AdminActivity.class);
-                startActivity(intent);
+                login_Admin(admins);
             }
         });
 
         seller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,SellerActivity.class)
-                        .putExtra("seller",username.getText());
-                startActivity(intent);
+                login_User(sellerses);
             }
         });
-
-        alertbox();
-
     }
 
 
-    private void alertbox(){
-        final EditText edittext = new EditText(getApplicationContext());
-        final EditText edittext1 = new EditText(getApplicationContext());
-        alert.setMessage("Book Product");
-        alert.setTitle("Order");
+    public void login_Admin(final Admins admins) {
+        if (!Musername.getText().toString().isEmpty() || !Mpassword.getText().toString().isEmpty()) {
 
-        alert.setView(edittext);
-        alert.setView(edittext1);
-
-        alert.setPositiveButton("Book Now", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
-                Editable YouEditTextValue = edittext.getText();
-                //OR
-//                String YouEditTextValue = edittext.getText().toString();
+            if (Musername.getText().toString().equals(admins.getMobile()) && Mpassword.getText().toString().equals(admins.getPassword())) {
+                Toast.makeText(MainActivity.this, "Welcome Admin.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this, "Sorry, wrong mobile number or password.", Toast.LENGTH_LONG).show();
             }
-        });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
+        } else {
+            Toast.makeText(MainActivity.this, "Please fill required fields.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void login_User(final List<Sellers> sellerses) {
+
+        if (!Musername.getText().toString().isEmpty() || !Mpassword.getText().toString().isEmpty()) {
+            for (Sellers seller : sellerses) {
+                if (Musername.getText().toString().equals(seller.getMobile()) && Mpassword.getText().toString().equals(seller.getPassword())) {
+                    Toast.makeText(MainActivity.this, "Welcome Mr. " + seller.getUsername(), Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this, SellerActivity.class)
+                            .putExtra("USERNAME", seller.getUsername())
+                            .putExtra("MOBILE", seller.getMobile());
+                    startActivity(intent);
+                }
             }
-        });
 
-        alert.show();
-
+        } else {
+            Toast.makeText(MainActivity.this, "Please fill required fields.", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
