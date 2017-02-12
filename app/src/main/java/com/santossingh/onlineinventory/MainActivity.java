@@ -13,7 +13,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.santossingh.onlineinventory.Activities.AdminActivity;
 import com.santossingh.onlineinventory.Models.Admins;
 import com.santossingh.onlineinventory.Models.Sellers;
 
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "DataBase Error: " + databaseError.getMessage(), Toast.LENGTH_LONG);
             }
         });
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (Musername.getText().toString().equals(admins.getMobile()) && Mpassword.getText().toString().equals(admins.getPassword())) {
                 Toast.makeText(MainActivity.this, "Welcome Admin.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                Intent intent = new Intent(MainActivity.this, ShowActivity.class);
                 startActivity(intent);
             } else {
                 Toast.makeText(MainActivity.this, "Sorry, wrong mobile number or password.", Toast.LENGTH_LONG).show();

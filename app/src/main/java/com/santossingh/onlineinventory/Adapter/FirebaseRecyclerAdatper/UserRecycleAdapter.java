@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -27,28 +28,25 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
     private Sellers sellers;
     private View rcView;
     private GetDataFromAdapter callback;
-    private DatabaseReference inventoryRef;
+    private DatabaseReference sellerRef;
+
 
     public UserRecycleAdapter(GetDataFromAdapter callback) {
         this.callback = callback;
         sellersList = new ArrayList<>();
-        inventoryRef = FirebaseDatabase.getInstance().getReference().child("sellers");
-
-        inventoryRef.addChildEventListener(new ChildEventListener() {
+        sellerRef = FirebaseDatabase.getInstance().getReference().child("sellers");
+        sellerRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
                 sellersList.add(0, sellers);
                 notifyDataSetChanged();
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 notifyDataSetChanged();
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
@@ -60,11 +58,9 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
                 }
                 notifyDataSetChanged();
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -72,7 +68,6 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
 
     }
 
-    // create View object and pass it on Holder class constructor
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         rcView = LayoutInflater.from(parent.getContext())
@@ -93,12 +88,20 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
         holder.password.setText("Password: " + seller.getPassword());
     }
 
+    private void removeData(Sellers sellers, int position) {
+        sellerRef.child(sellers.getKey()).removeValue();
+        sellersList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, sellersList.size());
+        notifyDataSetChanged();
+    }
 
     public interface GetDataFromAdapter {
         void onCurrentUser(Sellers seller);
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Button delete;
         private TextView user, password, mobile;
         private GetDataFromAdapter callback;
 
@@ -109,6 +112,16 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
             user = (TextView) itemView.findViewById(R.id.u_name);
             mobile = (TextView) itemView.findViewById(R.id.u_mobile);
             password = (TextView) itemView.findViewById(R.id.u_pwd);
+            delete = (Button) itemView.findViewById(R.id.delete_user);
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    sellers = sellersList.get(position);
+                    removeData(sellers, position);
+                }
+            });
         }
 
         @Override
@@ -118,12 +131,5 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
             callback.onCurrentUser(sellers);
         }
     }
-
-//    private void removeData(Inventory inventory, int position){
-//        inventoryRef.child(inventory.getKey()).removeValue();
-//        sellersList.remove(position);
-//        notifyItemRemoved(position);
-//        notifyItemRangeChanged(position, sellersList.size());
-//    }
 
 }

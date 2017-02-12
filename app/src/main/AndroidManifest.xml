@@ -26,12 +26,8 @@
         </activity>
         <activity android:name=".Activities.AdminActivity" />
         <activity android:name=".SellerActivity" />
-        <activity android:name=".Activities.AddProductActivity" />
         <activity android:name=".ShowActivity" />
-        <activity android:name=".UpdateActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".Activities.AddUserActivity" />
-        <activity android:name=".ProductsActivity" />
         <activity android:name=".OrdersActivity"></activity>
     </application>
 

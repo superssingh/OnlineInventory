@@ -27,5 +27,8 @@
         android:id="@+id/update_Admin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add" />
+        android:background="#0e4a99"
+        android:text="Update"
+        android:textColor="#fff"
+        android:textStyle="bold" />
 </LinearLayout>

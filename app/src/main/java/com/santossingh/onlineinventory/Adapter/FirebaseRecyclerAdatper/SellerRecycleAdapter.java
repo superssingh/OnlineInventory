@@ -90,6 +90,7 @@ public class SellerRecycleAdapter extends RecyclerView.Adapter<SellerRecycleAdap
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView product, qty, price;
+
         private GetDataFromAdapter callback;
 
         public Holder(View itemView, GetDataFromAdapter callback) {

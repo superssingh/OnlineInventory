@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:backgroundTint="#0b96b9"
     android:clickable="true"
     android:elevation="8dp"
     android:orientation="vertical">
@@ -17,12 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:text="User Name"
+        android:textColor="#fff"
         android:textSize="17dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#468fd4"
+            android:background="#296bab"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -31,17 +33,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="Mobile" />
+                android:text="Mobile"
+                android:textColor="#fff" />
 
             <TextView
                 android:id="@+id/u_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="Password" />
+                android:text="Password"
+                android:textColor="#fff" />
         </LinearLayout>
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/delete_user"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:background="@drawable/ic_delete"
+        android:backgroundTint="#fff" />
 
 </android.support.v7.widget.CardView>

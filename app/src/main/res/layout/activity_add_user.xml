@@ -13,31 +13,34 @@
 
     <EditText
         android:id="@+id/userName"
-        style="@style/TextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:hint="Enter Seller Name" />
 
     <EditText
         android:id="@+id/userMobile"
-        style="@style/TextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:gravity="center"
         android:hint="Enter Mobile Number"
         android:inputType="phone" />
 
     <EditText
         android:id="@+id/userPassword"
-        style="@style/TextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:hint="Enter Password" />
 
     <Button
         android:id="@+id/addUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add User" />
+        android:background="#116aab"
+        android:elevation="8dp"
+        android:text="Add User"
+        android:textColor="#fff" />
 
 </LinearLayout>

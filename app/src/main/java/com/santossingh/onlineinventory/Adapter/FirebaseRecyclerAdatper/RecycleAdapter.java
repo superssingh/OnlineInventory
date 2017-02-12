@@ -1,15 +1,11 @@
 package com.santossingh.onlineinventory.Adapter.FirebaseRecyclerAdatper;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +30,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder>{
     private View rcView;
     private GetDataFromAdapter callback;
     private DatabaseReference inventoryRef;
-    private ChildEventListener childEventListener;
 
     public RecycleAdapter(GetDataFromAdapter callback) {
         this.callback = callback;
@@ -111,49 +106,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder>{
         holder.price.setText(current.getPrice());
     }
 
-    public void addDataSnapshot(DatabaseReference databaseReference) {
-        inventoryRef = databaseReference;
-    }
-
-    private void removeData(Inventory inventory, int position) {
-        inventoryRef.child(inventory.getKey()).removeValue();
-        inventories.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, inventories.size());
-    }
-
-    private void updateDailog(final Context context, final Inventory inventory) {
-
-        dialog = new Dialog(context);
-        dialog.setTitle("Update Product");
-        dialog.setContentView(R.layout.update_dialog);
-
-        final EditText product = (EditText) dialog.findViewById(R.id.proName);
-        final EditText qty = (EditText) dialog.findViewById(R.id.proQty);
-        final EditText price = (EditText) dialog.findViewById(R.id.proPrice);
-        Button button = (Button) dialog.findViewById(R.id.update);
-
-        product.setText(inventory.getItem());
-        qty.setText(inventory.getQuantity());
-        price.setText(inventory.getPrice());
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Inventory inventory1 = new Inventory();
-                inventory1.setItem(product.getText().toString());
-                inventory1.setQuantity(qty.getText().toString());
-                inventory1.setPrice(price.getText().toString());
-                inventoryRef.child(inventory.getKey()).setValue(inventory1);
-                notifyDataSetChanged();
-                Toast.makeText(context, "Data Updated", Toast.LENGTH_LONG).show();
-
-            }
-        });
-        dialog.show();
-
-    }
-
     public interface GetDataFromAdapter {
         void onCurrentMovie(Inventory currentData);
     }
@@ -178,5 +130,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder>{
             callback.onCurrentMovie(currentData);
         }
     }
+
 
 }

@@ -38,7 +38,6 @@ public class OrdersRecycleAdapter extends RecyclerView.Adapter<OrdersRecycleAdap
         ordersRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
                 Orders orders = dataSnapshot.getValue(Orders.class);
                 orders.setKey(dataSnapshot.getKey());
                 ordersList.add(0, orders);
@@ -104,17 +103,11 @@ public class OrdersRecycleAdapter extends RecyclerView.Adapter<OrdersRecycleAdap
     }
 
     private void removeData(Orders orders, int position) {
-        int qty = Integer.parseInt(orders.getQty());
-
         ordersRef.child(orders.getKey()).removeValue();
         ordersList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, ordersList.size());
         notifyDataSetChanged();
-    }
-
-    public void restoreQtyIntoInventory() {
-
     }
 
     public interface GetDataFromAdapter {
