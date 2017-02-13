@@ -282,7 +282,6 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
         dialog.show();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -294,9 +293,15 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.SellerMenu:
-                Intent intent = new Intent(ShowActivity.this, UserActivity.class);
+
+            case R.id.OrderMenu:
+                Intent intent = new Intent(ShowActivity.this, OrdersActivity.class)
+                        .putExtra("MOBILE", adminsData.getMobile());
                 startActivity(intent);
+                return true;
+            case R.id.SellerMenu:
+                Intent intent1 = new Intent(ShowActivity.this, UserActivity.class);
+                startActivity(intent1);
                 return true;
             case R.id.AdminMenu:
                 updateAdminDialogBox(adminsData);

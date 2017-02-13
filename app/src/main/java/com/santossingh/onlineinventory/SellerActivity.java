@@ -189,7 +189,8 @@ public class SellerActivity extends AppCompatActivity implements SellerRecycleAd
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.OrdersMenu:
-                Intent intent = new Intent(SellerActivity.this, OrdersActivity.class);
+                Intent intent = new Intent(SellerActivity.this, OrdersActivity.class)
+                        .putExtra("MOBILE", sellerID);
                 startActivity(intent);
                 return true;
             default:
