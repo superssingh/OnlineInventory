@@ -5,18 +5,17 @@ package com.santossingh.onlineinventory.Models;
  */
 
 public class Sellers {
-    private String username;
-    private String password;
-    private String mobile;
+    private String username,mobile, password;
+
     private String key;
 
     public Sellers() {
     }
 
-    public Sellers(String username, String password, String mobile) {
+    public Sellers(String username, String mobile, String password) {
         this.username = username;
-        this.password = password;
         this.mobile = mobile;
+        this.password = password;
     }
 
     public String getUsername() {

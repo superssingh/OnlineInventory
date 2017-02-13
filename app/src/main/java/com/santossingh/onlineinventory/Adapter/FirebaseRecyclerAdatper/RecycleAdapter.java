@@ -1,6 +1,5 @@
 package com.santossingh.onlineinventory.Adapter.FirebaseRecyclerAdatper;
 
-import android.app.Dialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,6 @@ import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder>{
 
-    Dialog dialog;
     private List<Inventory> inventories;
     private Inventory currentData;
     private View rcView;

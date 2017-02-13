@@ -56,21 +56,21 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
-                sellersList.add(0, sellers);
+                sellersList.add(sellers);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
-                sellersList.add(0, sellers);
+                sellersList.add(sellers);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
-                sellersList.add(0, sellers);
+                sellersList.add(sellers);
             }
 
             @Override
@@ -102,7 +102,7 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
 
     public void addAlergDialogBox() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
-        View view = getLayoutInflater().inflate(R.layout.activity_add_user, null);
+        View view = getLayoutInflater().inflate(R.layout.add_user, null);
 
         final EditText user = (EditText) view.findViewById(R.id.userName);
         final EditText mobile = (EditText) view.findViewById(R.id.userMobile);
@@ -115,32 +115,35 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
             @Override
             public void onClick(View view) {
                 Boolean is = sellersList.isEmpty();
+                Toast.makeText(getApplicationContext(),"M "+mobile.getText().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"PWD "+pwd.getText().toString(),Toast.LENGTH_LONG).show();
                 if (is.equals(true)) {
                     Sellers sellers = new Sellers(
                             user.getText().toString().toUpperCase(),
                             mobile.getText().toString(),
                             pwd.getText().toString()
+
                     );
                     sellersReference.push().setValue(sellers);
                     user.setText("");
                     mobile.setText("");
                     pwd.setText("");
-                    Toast.makeText(getApplicationContext(), "Seller added.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserActivity.this, "Seller added.", Toast.LENGTH_LONG).show();
                 } else {
                     for (Sellers sellers : sellersList) {
                         if (mobile.getText().toString().equals(sellers.getMobile())) {
                             Toast.makeText(getApplicationContext(), "Seller already exist.", Toast.LENGTH_LONG).show();
                             break;
                         } else {
-                            Sellers seller = new Sellers(
-                                    user.getText().toString().toUpperCase(),
-                                    mobile.getText().toString(),
-                                    pwd.getText().toString()
-                            );
+                            Sellers seller = new Sellers();
+                            seller.setUsername(user.getText().toString().toUpperCase());
+                            seller.setMobile(mobile.getText().toString());
+                            seller.setPassword(pwd.getText().toString());
+
                             sellersReference.push().setValue(seller);
-                            user.setText("");
-                            mobile.setText("");
-                            pwd.setText("");
+                                user.setText("");
+                                mobile.setText("");
+                                pwd.setText("");
                             Toast.makeText(getApplicationContext(), "Seller added.", Toast.LENGTH_LONG).show();
                             break;
                         }

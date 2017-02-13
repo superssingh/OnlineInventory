@@ -102,7 +102,7 @@ public class UserRecycleAdapter extends RecyclerView.Adapter<UserRecycleAdapter.
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Button delete;
-        private TextView user, password, mobile;
+        private TextView user, mobile,password;
         private GetDataFromAdapter callback;
 
         public Holder(View itemView, GetDataFromAdapter callback) {

@@ -21,7 +21,7 @@
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/log_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -32,7 +32,7 @@
             />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/log_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -45,7 +45,7 @@
 
 
     <Button
-        android:id="@+id/Seller"
+        android:id="@+id/log_Seller"
         style="@style/Base.TextAppearance.AppCompat.Widget.Button.Inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         />
 
     <Button
-        android:id="@+id/Admin"
+        android:id="@+id/log_Admin"
         style="@style/Base.TextAppearance.AppCompat.Widget.Button.Inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

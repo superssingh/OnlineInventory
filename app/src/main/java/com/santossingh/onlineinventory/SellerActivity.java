@@ -37,6 +37,7 @@ public class SellerActivity extends AppCompatActivity implements SellerRecycleAd
     DatabaseReference inventoryRef, ordersRef;
     String sellerID = "000";
     AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

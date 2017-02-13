@@ -22,17 +22,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.santossingh.onlineinventory.R.id.Admin;
-import static com.santossingh.onlineinventory.R.id.username;
-
 public class MainActivity extends AppCompatActivity {
-    @BindView(username)
-    EditText Musername;
-    @BindView(R.id.password)
-    EditText Mpassword;
-    @BindView(Admin)
-    Button admin;
-    @BindView(R.id.Seller) Button seller;
+    @BindView(R.id.log_username) EditText Musername;
+    @BindView(R.id.log_password) EditText Mpassword;
+    @BindView(R.id.log_Admin) Button admin;
+    @BindView(R.id.log_Seller) Button seller;
     List<Sellers> sellerses;
     Admins admins;
     private FirebaseDatabase firebaseDatabase;
@@ -54,21 +48,20 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
-                sellerses.add(sellers);
+                sellerses.add(0,sellers);
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Sellers sellers = dataSnapshot.getValue(Sellers.class);
+                sellers.setKey(dataSnapshot.getKey());
+                sellerses.add(0,sellers);
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "DataBase Error: " + databaseError.getMessage(), Toast.LENGTH_LONG);
@@ -80,32 +73,31 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Admins admin = dataSnapshot.getValue(Admins.class);
                 admin.setKey(dataSnapshot.getKey());
-                admins = admin;
+                admins.setValues(admin);
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Admins admin = dataSnapshot.getValue(Admins.class);
+                admin.setKey(dataSnapshot.getKey());
+                admins.setValues(admin);
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
-
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 login_Admin(admins);
             }
         });
-
         seller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,18 +124,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login_User(final List<Sellers> sellerses) {
+        Toast.makeText(MainActivity.this, Musername.getText().toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, sellerses.get(0).getMobile(), Toast.LENGTH_LONG).show();
 
         if (!Musername.getText().toString().isEmpty() || !Mpassword.getText().toString().isEmpty()) {
             for (Sellers seller : sellerses) {
                 if (Musername.getText().toString().equals(seller.getMobile()) && Mpassword.getText().toString().equals(seller.getPassword())) {
                     Toast.makeText(MainActivity.this, "Welcome Mr. " + seller.getUsername(), Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, SellerActivity.class)
-                            .putExtra("USERNAME", seller.getUsername())
                             .putExtra("MOBILE", seller.getMobile());
                     startActivity(intent);
+                }else{
+
                 }
             }
-
         } else {
             Toast.makeText(MainActivity.this, "Please fill required fields.", Toast.LENGTH_LONG).show();
         }

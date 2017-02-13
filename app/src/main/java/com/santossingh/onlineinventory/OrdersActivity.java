@@ -54,16 +54,16 @@ public class OrdersActivity extends AppCompatActivity implements OrdersRecycleAd
                 Orders orders = dataSnapshot.getValue(Orders.class);
                 orders.setKey(dataSnapshot.getKey());
                 ordersList.add(0, orders);
+                RefeshAdapter();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if (ordersList != null) {
-                    ordersList.clear();
-                }
+                ordersList.clear();
                 Orders orders = dataSnapshot.getValue(Orders.class);
                 orders.setKey(dataSnapshot.getKey());
                 ordersList.add(0, orders);
+                RefeshAdapter();
             }
 
             @Override
@@ -71,6 +71,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersRecycleAd
                 Orders orders = dataSnapshot.getValue(Orders.class);
                 orders.setKey(dataSnapshot.getKey());
                 ordersList.add(0, orders);
+                RefeshAdapter();
             }
 
             @Override
@@ -132,9 +133,7 @@ public class OrdersActivity extends AppCompatActivity implements OrdersRecycleAd
 
                     ordersRef.child(key).setValue(order);
                     Toast.makeText(getApplicationContext(), "Order updated.", Toast.LENGTH_LONG).show();
-                    recycleAdapter = new OrdersRecycleAdapter(OrdersActivity.this);
-                    recycleAdapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(recycleAdapter);
+                    RefeshAdapter();
                     view.setVisibility(view.GONE);
 
                 } else {
@@ -158,6 +157,12 @@ public class OrdersActivity extends AppCompatActivity implements OrdersRecycleAd
 
         return currentDate;
     }
+
+    public void RefeshAdapter(){
+        recycleAdapter = new OrdersRecycleAdapter(this);
+        recycleAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(recycleAdapter);
+    };
 
 
 }
