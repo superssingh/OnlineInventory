@@ -16,13 +16,18 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.santossingh.onlineinventory.Adapter.FirebaseRecyclerAdatper.SellerRecycleAdapter;
 import com.santossingh.onlineinventory.Models.Inventory;
 import com.santossingh.onlineinventory.Models.Orders;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -37,6 +42,7 @@ public class SellerActivity extends AppCompatActivity implements SellerRecycleAd
     DatabaseReference inventoryRef, ordersRef;
     String sellerID = "000";
     AlertDialog dialog;
+    List<Inventory> inventoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +51,42 @@ public class SellerActivity extends AppCompatActivity implements SellerRecycleAd
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
         sellerID = bundle.getString("MOBILE");
+        inventoryList = new ArrayList<>();
 
         inventoryRef = FirebaseDatabase.getInstance().getReference().child("inventory");
         ordersRef = FirebaseDatabase.getInstance().getReference().child("orders");
-
         recycleAdapter = new SellerRecycleAdapter(SellerActivity.this);
+
+        inventoryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Inventory inventory = dataSnapshot.getValue(Inventory.class);
+                inventory.setKey(dataSnapshot.getKey());
+                inventoryList.add(0, inventory);
+                RefeshAdapter();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                inventoryList.clear();
+                Inventory inventory = dataSnapshot.getValue(Inventory.class);
+                inventory.setKey(dataSnapshot.getKey());
+                inventoryList.add(0, inventory);
+                RefeshAdapter();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -198,4 +235,13 @@ public class SellerActivity extends AppCompatActivity implements SellerRecycleAd
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void RefeshAdapter() {
+        recycleAdapter = new SellerRecycleAdapter(this);
+        recycleAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(recycleAdapter);
+    }
+
+    ;
+
 }

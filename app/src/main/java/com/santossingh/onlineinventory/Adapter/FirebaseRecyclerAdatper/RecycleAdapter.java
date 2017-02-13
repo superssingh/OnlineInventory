@@ -48,7 +48,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder>{
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 String key = dataSnapshot.getKey();
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
-
                 for (Inventory item : inventories) {
                     if (item.equals(key)) {
                         item.setValues(inventory);

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.log_Seller) Button seller;
     List<Sellers> sellerses;
     Admins admins;
+    String msg;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference adminRef, sellerRef;
 
@@ -117,27 +118,25 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, "Sorry, wrong mobile number or password.", Toast.LENGTH_LONG).show();
             }
-
         } else {
             Toast.makeText(MainActivity.this, "Please fill required fields.", Toast.LENGTH_LONG).show();
         }
     }
 
     public void login_User(final List<Sellers> sellerses) {
-        Toast.makeText(MainActivity.this, Musername.getText().toString(), Toast.LENGTH_LONG).show();
-        Toast.makeText(MainActivity.this, sellerses.get(0).getMobile(), Toast.LENGTH_LONG).show();
-
+        String a = "Wrong login mobile or password!";
         if (!Musername.getText().toString().isEmpty() || !Mpassword.getText().toString().isEmpty()) {
             for (Sellers seller : sellerses) {
                 if (Musername.getText().toString().equals(seller.getMobile()) && Mpassword.getText().toString().equals(seller.getPassword())) {
-                    Toast.makeText(MainActivity.this, "Welcome Mr. " + seller.getUsername(), Toast.LENGTH_LONG).show();
+                    msg = "Welcome Mr. " + seller.getUsername();
                     Intent intent = new Intent(MainActivity.this, SellerActivity.class)
                             .putExtra("MOBILE", seller.getMobile());
                     startActivity(intent);
                 }else{
-
+                    msg = a;
                 }
             }
+            Toast.makeText(MainActivity.this, msg.toString(), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(MainActivity.this, "Please fill required fields.", Toast.LENGTH_LONG).show();
         }

@@ -28,6 +28,7 @@
             android:foregroundGravity="center"
             android:gravity="center"
             android:hint="Mobile Number"
+            android:inputType="phone"
             android:padding="10dp"
             />
 

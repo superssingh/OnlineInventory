@@ -58,13 +58,12 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
+                recycleAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if (inventoryList != null) {
-                    inventoryList.clear();
-                }
+                inventoryList.clear();
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
@@ -81,7 +80,6 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
                 recycleAdapter.notifyDataSetChanged();
-
             }
 
             @Override

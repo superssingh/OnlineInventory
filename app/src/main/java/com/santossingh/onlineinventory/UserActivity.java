@@ -57,20 +57,25 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
                 sellersList.add(sellers);
+                RefeshAdapter();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                sellersList.clear();
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
                 sellersList.add(sellers);
+                RefeshAdapter();
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                sellersList.clear();
                 Sellers sellers = dataSnapshot.getValue(Sellers.class);
                 sellers.setKey(dataSnapshot.getKey());
                 sellersList.add(sellers);
+                RefeshAdapter();
             }
 
             @Override
@@ -115,8 +120,6 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
             @Override
             public void onClick(View view) {
                 Boolean is = sellersList.isEmpty();
-                Toast.makeText(getApplicationContext(),"M "+mobile.getText().toString(),Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(),"PWD "+pwd.getText().toString(),Toast.LENGTH_LONG).show();
                 if (is.equals(true)) {
                     Sellers sellers = new Sellers(
                             user.getText().toString().toUpperCase(),
@@ -157,4 +160,13 @@ public class UserActivity extends AppCompatActivity implements UserRecycleAdapte
         dialog = builder.create();
         dialog.show();
     }
+
+    public void RefeshAdapter() {
+        userRecycleAdapter = new UserRecycleAdapter(this);
+        userRecycleAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(userRecycleAdapter);
+    }
+
+    ;
+
 }
