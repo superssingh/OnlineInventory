@@ -58,7 +58,7 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
-                recycleAdapter.notifyDataSetChanged();
+                RefeshAdapter();
             }
 
             @Override
@@ -67,7 +67,7 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
-                recycleAdapter.notifyDataSetChanged();
+                RefeshAdapter();
 
             }
 
@@ -79,7 +79,7 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
                 Inventory inventory = dataSnapshot.getValue(Inventory.class);
                 inventory.setKey(dataSnapshot.getKey());
                 inventoryList.add(0, inventory);
-                recycleAdapter.notifyDataSetChanged();
+                RefeshAdapter();
             }
 
             @Override
@@ -307,6 +307,12 @@ public class ShowActivity extends AppCompatActivity implements RecycleAdapter.Ge
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    
+    public void RefeshAdapter() {
+        recycleAdapter = new RecycleAdapter(this);
+        recycleAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(recycleAdapter);
     }
 
 }
